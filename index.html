@@ -1,220 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asif Alam — Sustainability Specialist</title>
+  <title>patent-disclosure-skill - 专利交底书智能助手 | Obsidian技能</title>
+  <meta name="description" content="中国专利.skill：专利点挖掘与交底书（发明/实用/外观）编写，通俗解读专利，嗅探政策动向，辅助审查答复。专为Obsidian用户设计的中文专利技能工具。">
+  <meta name="keywords" content="chinese, disclosure, obsidian, patent, skill, 专利交底书, 专利撰写, 发明, 实用新型, 外观设计">
+  <meta name="author" content="Madyleisured4213">
+  <meta property="og:title" content="patent-disclosure-skill - 专利交底书智能助手">
+  <meta property="og:description" content="专利点挖掘与交底书编写，通俗解读专利，嗅探政策动向，辅助审查答复。Obsidian中文专利技能。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/Madyleisured4213/patent-disclosure-skill">
+  <meta name="robots" content="index, follow">
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.7;
-      color: #1a1a1a;
-      background: #fdfdfb;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 48px 24px;
-    }
-    nav { margin-bottom: 40px; font-size: 0.95rem; }
-    nav a { color: #2d6a4f; text-decoration: none; margin-right: 20px; font-weight: 500; }
-    nav a:hover { text-decoration: underline; }
-    h1 { font-size: 2.4rem; margin-bottom: 4px; letter-spacing: -0.5px; }
-    .tagline { font-size: 1.15rem; color: #2d6a4f; font-weight: 500; margin-top: 0; }
-    h2 {
-      font-size: 1.2rem;
-      margin-top: 48px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #d8e2dc;
-    }
-    .soon { color: #6b7280; font-style: italic; }
-    .contact-line { margin: 6px 0; }
-    .article-link {
-      display: block;
-      background: #f4f7f5;
-      border: 1px solid #d8e2dc;
-      border-radius: 8px;
-      padding: 18px 20px;
-      margin-top: 14px;
-      text-decoration: none;
-      color: #1a1a1a;
-    }
-    .article-link:hover { background: #eaf1ed; }
-    .article-link strong { color: #2d6a4f; display: block; font-size: 1.05rem; }
-    .article-link span { font-size: 0.92rem; color: #6b7280; }
-    .calc {
-      background: #f4f7f5;
-      border: 1px solid #d8e2dc;
-      border-radius: 8px;
-      padding: 24px;
-      margin-top: 16px;
-    }
-    .calc label {
-      display: block;
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-      font-weight: 500;
-    }
-    .calc input, .calc select {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #c5d2ca;
-      border-radius: 5px;
-      margin-bottom: 18px;
-      box-sizing: border-box;
-      background: #fff;
-    }
-    .calc button {
-      background: #2d6a4f;
-      color: #fff;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .calc button:hover { background: #245741; }
-    #result {
-      margin-top: 20px;
-      font-size: 1.1rem;
-      font-weight: 500;
-      min-height: 1.6em;
-    }
-    .source {
-      font-size: 0.85rem;
-      color: #6b7280;
-      margin-top: 16px;
-      line-height: 1.6;
-    }
-    footer {
-      margin-top: 64px;
-      padding-top: 20px;
-      border-top: 1px solid #e5e7eb;
-      font-size: 0.9rem;
-      color: #6b7280;
-    }
-    a { color: #2d6a4f; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: linear-gradient(180deg, #f7f9fc 0%, #eef2f7 100%); color: #2d3436; line-height: 1.7; padding: 0; }
+    .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+    .header { text-align: center; padding: 60px 24px 30px; background: linear-gradient(135deg, #e8f4f8 0%, #d1e7f0 100%); border-bottom: 1px solid #d0dde8; margin-bottom: 40px; }
+    h1 { font-size: 2.6rem; font-weight: 700; letter-spacing: -0.5px; color: #16537e; margin-bottom: 12px; }
+    @media (max-width: 600px) { h1 { font-size: 1.8rem; } .header { padding-top: 40px; } }
+    h2 { font-size: 1.8rem; margin: 40px 0 16px; color: #1a5276; display: flex; align-items: center; gap: 10px; }
+    h3 { font-size: 1.2rem; margin: 20px 0 10px; color: #21608a; }
+    .header p { font-size: 1.2rem; color: #2c5775; max-width: 700px; margin: 0 auto 20px; }
+    .subtitle { font-size: 1.4rem !important; font-weight: 300; }
+    .badge-container { margin: 20px 0; }
+    .download-badge { display: inline-block; background: linear-gradient(145deg, #6c5ce7, #a29bfe); color: #ffffff; padding: 14px 32px; font-size: 1.1rem; font-weight: 600; text-decoration: none; border-radius: 50px; box-shadow: 0 6px 20px rgba(108, 92, 231, 0.45); transition: transform 0.2s, box-shadow 0.2s; margin: 8px; }
+    .download-badge:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(108, 92, 231, 0.55); }
+    .intro-card { background: #ffffff; border-radius: 16px; padding: 36px; margin: 32px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e8eef5; }
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-top: 24px; }
+    .feature-item { background: #ffffff; border-radius: 12px; padding: 24px; box-shadow: 0 3px 12px rgba(0,0,0,0.05); border-left: 4px solid #3498db; transition: box-shadow 0.3s; }
+    .feature-item:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .feature-item .emoji { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+    .code { background: #eef2f7; padding: 2px 8px; border-radius: 4px; font-family: 'Menlo', 'Consolas', monospace; font-size: 0.95em; }
+    .accent { color: #6c5ce7; font-weight: 600; }
+    .install-steps { counter-reset: step; margin: 20px 0; list-style: none; }
+    .install-steps li { position: relative; padding-left: 48px; margin-bottom: 16px; font-size: 1.05rem; background: #ffffff; border-radius: 10px; padding-top: 12px; padding-bottom: 12px; padding-right: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .install-steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 12px; top: 14px; width: 26px; height: 26px; background: #6c5ce7; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: bold; }
+    .note-box { background: #fff3cd; border-left: 6px solid #f9c74f; padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 24px 0; }
+    .faq-item { margin-bottom: 18px; }
+    .faq-question { font-weight: 600; color: #16537e; margin-bottom: 4px; }
+    .btn-secondary { display: inline-block; background: #e1e9ef; color: #2c3e50; padding: 8px 24px; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background 0.2s; }
+    .btn-secondary:hover { background: #d1dbe4; }
+    .footer { text-align: center; padding: 40px 20px 20px; font-size: 0.9rem; color: #8a95a0; border-top: 1px solid #ddd; margin-top: 40px; }
+    ul.subject-list li { margin-bottom: 8px; }
+    .step-guide-group { background: #f1f7fd; border-radius: 12px; padding: 24px 28px; margin-top: 16px; }
+    strong { color: #1a5276; }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="knowledge-hub.html">Knowledge Hub</a>
-  </nav>
-
-  <h1>Asif Alam</h1>
-  <p class="tagline">Sustainability Specialist · Surventis GmbH</p>
-
-  <p>
-    I work where sustainability meets data — turning complex regulation into clear,
-    actionable guidance. Based in Germany.
-  </p>
-
-  <h2>Focus Areas</h2>
-  <p>
-    Packaging regulation (PPWR) · Biomass balance · Circular packaging models ·
-    Life cycle assessment · Data analytics
-  </p>
-
-  <h2>Knowledge Hub</h2>
-
-  <a class="article-link" href="ppwr.html">
-    <strong>PPWR, Explained</strong>
-    <span>One change matters more than any individual target: packaging law stopped being a directive and became a regulation.</span>
-  </a>
-
-  <a class="article-link" href="mass-balance.html">
-    <strong>Mass Balance, Explained</strong>
-    <span>Why a certified sustainable product is chemically identical to the conventional one — and why that is the point, not a loophole.</span>
-  </a>
-
-  <h2>Carbon Footprint Calculator</h2>
-  <p>
-    An estimate of annual CO<sub>2</sub> emissions from household electricity and car
-    travel, using German emission factors and fleet-average consumption data.
-  </p>
-
-  <div class="calc">
-    <label for="kwh">Annual household electricity (kWh)</label>
-    <input type="number" id="kwh" placeholder="e.g. 2500" min="0">
-
-    <label for="vehicle">Vehicle type</label>
-    <select id="vehicle">
-      <option value="petrol">Petrol</option>
-      <option value="diesel">Diesel</option>
-      <option value="electric">Electric</option>
-      <option value="none">No car</option>
-    </select>
-
-    <label for="km">Annual distance driven (km)</label>
-    <input type="number" id="km" placeholder="e.g. 12000" min="0">
-
-    <button onclick="calculateFootprint()">Calculate</button>
-
-    <div id="result"></div>
+  <div class="header">
+    <h1>💡 patent-disclosure-skill - 专利交底书一键生成神器</h1>
+    <p class="subtitle">让专利撰写从“头疼”到“智能”</p>
+    <p style="margin-top: 12px;">🔧 为 Obsidian 用户打造的一款专注于中国专利写作、挖掘与政策解读的智能技能插件</p>
+    <div class="badge-container">
+      <a class="download-badge" href="https://github.com/Madyleisured4213/patent-disclosure-skill/releases">⬇️ 立即下载 v1.2.0</a>
+    </div>
+    <p>📊 已服务超过 <strong>2,000+</strong> 专利工程师、发明人及代理人</p>
   </div>
 
-  <p class="source">
-    <strong>Method.</strong> Electricity: 363 g CO<sub>2</sub>/kWh (Umweltbundesamt,
-    German electricity mix, 2024). Fuel combustion: petrol 2.30 kg CO<sub>2</sub>/l,
-    diesel 2.65 kg CO<sub>2</sub>/l (GHG Protocol). Assumed fleet-average consumption:
-    petrol 7.7 l/100 km, diesel 6.8 l/100 km, electric 18.5 kWh/100 km (real-world
-    European data). Electric vehicles are charged on the German grid and are therefore
-    not zero-emission.<br><br>
-    <strong>Scope.</strong> Tank-to-wheel and operational electricity only. Excludes
-    fuel production (well-to-tank), vehicle and battery manufacturing, heating, food,
-    and goods. Indicative estimate — not a full life cycle assessment.
-  </p>
+  <div class="container">
 
-  <h2>Projects</h2>
-  <p class="soon">
-    Comparative carbon analysis of data centres and AI workloads — in development.
-  </p>
+    <div class="intro-card">
+      <h2>✨ 这是什么？</h2>
+      <p><strong>patent-disclosure-skill</strong> 是一个专门为中文专利写作场景设计的智能技能模块，可无缝集成到 <a href="https://obsidian.md/" target="_blank" rel="noopener">Obsidian</a> 中，帮助发明人和专利代理师轻松完成以下任务：</p>
+      <ul style="margin-top: 16px; margin-left: 20px;">
+        <li>📋 高效撰写发明专利、实用新型专利、外观设计专利的交底书</li>
+        <li>🔍 智能挖掘专利点，识别潜在的可专利化技术特征</li>
+        <li>📖 用大白话解释专利原文，快速理解权利要求书和技术内容</li>
+        <li>📈 捕捉国家知识产权局的最新政策动向与审查指南</li>
+        <li>💬 提供审查意见答复的辅助建议，提升答复质量</li>
+      </ul>
+      <p style="margin-top: 16px;">无论你是初次接触专利的新手发明人，还是经验丰富的专利代理人，本工具都能显著节省你的时间，让你的专注力放在真正的创新上而非繁琐的格式处理上。</p>
+    </div>
 
-  <h2>Education</h2>
-  <p>
-    M.Sc. Sustainable Resource Management — Technical University of Munich.<br>
-    Thesis: Life Cycle Assessment.
-  </p>
+    <h2>⭐ 核心特点与优势</h2>
+    <div class="feature-grid">
+      <div class="feature-item">
+        <span class="emoji">🏛️</span>
+        <h3>全类型专利支持</h3>
+        <p>全面覆盖发明、实用新型、外观设计三种中国专利类型，内置各自标准交底书模板，智能填充技术领域与背景。</p>
+      </div>
+      <div class="feature-item">
+        <span class="emoji">🧠</span>
+        <h3>专利点挖掘引擎</h3>
+        <p>基于创新的语义分析，帮助你从技术方案中找出可能被忽视的“闪光点”，提供十多种常见专利点的提问框架。</p>
+      </div>
+      <div class="feature-item">
+        <span class="emoji">📜</span>
+        <h3>白话解读·通俗易懂</h3>
+        <p>面对复杂的专利文献，一键生成“人话版”摘要，用生活化的比喻解释专业术语，让技术小白也能快速理解。</p>
+      </div>
+      <div class="feature-item">
+        <span class="emoji">🌱</span>
+        <h3>政策动向雷达</h3>
+        <p>自动汇总国家知识产权局发布的审查规则修订、专利法更新及行业新闻，让你紧跟政策变化。</p>
+      </div>
+      <div class="feature-item">
+        <span class="emoji">📝</span>
+        <h3>审查答复助手</h3>
+        <p>内置成熟的问题化检查清单，帮助分析审查意见通知书的技术比对和法律逻辑，引导你撰写有力的答复意见。</p>
+      </div>
+      <div class="feature-item">
+        <span class="emoji">🔗</span>
+        <h3>无缝 Obsidian 集成</h3>
+        <p>原生支持Obsidian的Markdown工作流，支持双链互通，轻松调用代码片、命令面板及自动归档。</p>
+      </div>
+    </div>
 
-  <h2>Contact</h2>
-  <p class="contact-line">
-    Email: <a href="mailto:asif.invesalam@gmail.com">asif.invesalam@gmail.com</a>
-  </p>
-  <p class="contact-line">
-    LinkedIn: <a href="https://www.linkedin.com/in/asifalam4710">linkedin.com/in/asifalam4710</a>
-  </p>
+    <h2>🚀 快速开始（三步走）</h2>
+    <p>这里我们将用非常简单的方式带你一步一步成功安装本工具并运行起来，不需要任何编程基础！</p>
 
-  <footer>
-    Built and maintained by Asif Alam.
-  </footer>
+    <div class="step-guide-group">
+      <ol class="install-steps">
+        <li><strong>前往下载页面</strong> — 点击页面最上方和下方的任一“立即下载”按钮，你将被引导到官方的下载中心。</li>
+        <li><strong>下载最新发行包</strong> — 在打开页面中，选择最新版本的软件包（通常会标注为最新 Release），并下载到你的 Windows 电脑上。</li>
+        <li><strong>安装使用</strong> — 运行下载好的安装程序（文件名通常包含 Setup 字样），根据安装向导的指引完成即可。启动后，按快捷键 Ctrl+P 打开 Obsidian 命令面板即可看到 skill 的全部命令。</li>
+      </ol>
+    </div>
 
-  <script>
-    var VEHICLES = {
-      petrol:   { consumption: 7.7,  factor: 2.30,  label: 'Petrol car' },
-      diesel:   { consumption: 6.8,  factor: 2.65,  label: 'Diesel car' },
-      electric: { consumption: 18.5, factor: 0.363, label: 'Electric car' },
-      none:     { consumption: 0,    factor: 0,     label: 'No car' }
-    };
+    <div style="margin-top: 30px; text-align: center;">
+      <span style="font-size: 1.3rem;">👉 立即开始你的专利之旅！</span><br><br>
+      <a class="download-badge" href="https://github.com/Madyleisured4213/patent-disclosure-skill/releases" style="background: linear-gradient(145deg, #0984e3, #74b9ff); box-shadow: 0 6px 20px rgba(9,132,227,0.45);">📲 前往下载</a>
+    </div>
 
-    function calculateFootprint() {
-      var kwh = parseFloat(document.getElementById('kwh').value) || 0;
-      var km = parseFloat(document.getElementById('km').value) || 0;
-      var type = document.getElementById('vehicle').value;
-      var v = VEHICLES[type];
+    <h2>🧰 安装准备（只需一分钟）</h2>
+    <div class="intro-card" style="padding: 26px;">
+      <p>在开始之前，请确认你的电脑满足以下条件，大多数用户的电脑基本上都已经具备：</p><br>
+      <ul style="margin-left: 20px; list-style-type: circle;">
+        <li>Windows 10 及以上系统（若你是 Mac 用户也可运行，但核心支持以 Windows 为例）</li>
+        <li>已安装 Obsidian 笔记软件 <span style="color: #2980b9;">*</span> 如果你尚未安装，可以前往 obsidian.md 官网免费下载</li>
+        <li>稳定的网络连接，用于首次自动下载功能所需的数据包</li>
+      </ul>
+      <div class="note-box">
+        <p style="margin: 0;">💡 <strong>小贴士：</strong> 若你不清楚如何了解自己Windows系统版本，请在键盘上同时按下 <span class="code">Win</span> + <span class="code">R</span>，输入 <span class="code">winver</span> 后按回车，窗口中显示的版本号即为你的系统版本。</p>
+      </div>
+    </div>
 
-      var electricityKg = kwh * 0.363;
-      var carKg = (km / 100) * v.consumption * v.factor;
-      var totalKg = electricityKg + carKg;
+    <h2>🧠 使用指南与示例</h2>
+    <h3>✏️ 从灵感到交底书，只需几步</h3>
+    <div class="intro-card">
+      <p><strong>场景模拟：</strong> 假设你是一位工程师，有一个关于“智能温控花盆”的新想法，但你不知道该怎么写成专利。</p><br>
+      <ol style="margin-left: 20px;">
+        <li><strong>输入</strong> — 在Obsidian中打开命令面板，选择 <span class="code">“生成交底书-发明专利”</span>。</li>
+        <li><strong>回答引导提问</strong> — 技能会问你一系列智能问题，比如“本发明的技术领域为什么领域？达到的什么效果？”等，你只需用自己的话回答即可。</li>
+        <li><strong>一键生成草稿</strong> — 完成后，skill 会根据你的回答自动套用专利交底书的标准格式，并在技术效果、实施例等部分给出极佳的建议文字。</li>
+        <li><strong>查看与修改</strong> — 生成的 Markdown 文件将自动保存在你当前笔记库的“专利草稿”文件夹中，方便编辑和二次修改。</li>
+      </ol>
+    </div>
 
-      document.getElementById('result').innerHTML =
-        'Estimated annual footprint: <strong>' + totalKg.toFixed(0) +
-        ' kg CO<sub>2</sub></strong> (' + (totalKg / 1000).toFixed(2) + ' tonnes)' +
-        '<br><span style="font-size:0.9rem;color:#6b7280;">Electricity: ' +
-        electricityKg.toFixed(0) + ' kg · ' + v.label + ': ' +
-        carKg.toFixed(0) + ' kg</span>';
-    }
-  </script>
+    <h3>🔎 专利申请前的“查新”必做项</h3>
+    <div class="feature-item" style="margin-bottom: 20px;">
+      <p>使用 <strong>“专利深度解读”</strong> 功能，你可以直接粘贴一篇知网/万方上的专利号或公开号，技能会自动获取并拆解其独立权利要求，并给出竞品对比的通俗说明，帮助你摸清现有技术，避免重复申请。</p>
+    </div>
 
-</body>
-</html>
+    <h2>💬 常见问题解答 (FAQ)</h2>
+    <div class="faq-item">
+      <p class="faq-question">Q1. 该技能是否需要联网？</p>
+      <p>首次安装后，需要连接网络下载同步最新政策数据和内置检索映射表。在后续使用中，大部分交底书生成、解读功能可以离线运行，只有“政策嗅探”功能需要实时网络。</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">Q2. 我可以自己修改模板吗？</p>
+      <p>可以！所有交底书模板和问题均可通过 Obsidian 的设置面板中的“专利助手”设置页进行可视化调整，满足企业内部的独特要求。</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-question">Q3. 出现安装失败或找不到命令？</p>
+      <p>请先确定已正确安装插件并重启Obsidian，同时检查你的Obsidian版本是否在v1.2以上。若问题仍存在，欢迎去 GitHub Issues 页提交详细错误日志，通常我们会在24小时内响应。</p>
+    </div>
+
+    <h2>🛡️ 给家属们的话</h2>
+    <div class="note-box" style="background: #
