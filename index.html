@@ -37,7 +37,7 @@
       margin-bottom: 4px;
       font-weight: 500;
     }
-    .calc input {
+    .calc input, .calc select {
       width: 100%;
       padding: 10px;
       font-size: 1rem;
@@ -45,6 +45,7 @@
       border-radius: 5px;
       margin-bottom: 18px;
       box-sizing: border-box;
+      background: #fff;
     }
     .calc button {
       background: #2d6a4f;
@@ -60,14 +61,13 @@
       margin-top: 20px;
       font-size: 1.1rem;
       font-weight: 500;
-      color: #1a1a1a;
       min-height: 1.6em;
     }
     .source {
       font-size: 0.85rem;
       color: #6b7280;
       margin-top: 16px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
     footer {
       margin-top: 64px;
@@ -97,15 +97,23 @@
 
   <h2>Carbon Footprint Calculator</h2>
   <p>
-    A simple estimate of annual CO<sub>2</sub> emissions from household electricity
-    and car travel, using German emission factors.
+    An estimate of annual CO<sub>2</sub> emissions from household electricity and car
+    travel, using German emission factors and fleet-average consumption data.
   </p>
 
   <div class="calc">
-    <label for="kwh">Annual electricity use (kWh)</label>
+    <label for="kwh">Annual household electricity (kWh)</label>
     <input type="number" id="kwh" placeholder="e.g. 2500" min="0">
 
-    <label for="km">Annual car distance (km)</label>
+    <label for="vehicle">Vehicle type</label>
+    <select id="vehicle">
+      <option value="petrol">Petrol</option>
+      <option value="diesel">Diesel</option>
+      <option value="electric">Electric</option>
+      <option value="none">No car</option>
+    </select>
+
+    <label for="km">Annual distance driven (km)</label>
     <input type="number" id="km" placeholder="e.g. 12000" min="0">
 
     <button onclick="calculateFootprint()">Calculate</button>
@@ -114,10 +122,15 @@
   </div>
 
   <p class="source">
-    Emission factors: electricity 363 g CO<sub>2</sub>/kWh (Umweltbundesamt, German
-    electricity mix, 2024); passenger car 170 g CO<sub>2</sub>/km (average petrol vehicle).
-    Scope: direct operational emissions only. Excludes manufacturing, heating, and other
-    consumption. Indicative estimate — not a full life cycle assessment.
+    <strong>Method.</strong> Electricity: 363 g CO<sub>2</sub>/kWh (Umweltbundesamt,
+    German electricity mix, 2024). Fuel combustion: petrol 2.30 kg CO<sub>2</sub>/l,
+    diesel 2.65 kg CO<sub>2</sub>/l (GHG Protocol). Assumed fleet-average consumption:
+    petrol 7.7 l/100 km, diesel 6.8 l/100 km, electric 18.5 kWh/100 km (real-world
+    European data). Electric vehicles are charged on the German grid and are therefore
+    not zero-emission.<br><br>
+    <strong>Scope.</strong> Tank-to-wheel and operational electricity only. Excludes
+    fuel production (well-to-tank), vehicle and battery manufacturing, heating, food,
+    and goods. Indicative estimate — not a full life cycle assessment.
   </p>
 
   <h2>Projects</h2>
@@ -144,20 +157,29 @@
   </footer>
 
   <script>
+    var VEHICLES = {
+      petrol:   { consumption: 7.7,  factor: 2.30,  label: 'Petrol car' },
+      diesel:   { consumption: 6.8,  factor: 2.65,  label: 'Diesel car' },
+      electric: { consumption: 18.5, factor: 0.363, label: 'Electric car' },
+      none:     { consumption: 0,    factor: 0,     label: 'No car' }
+    };
+
     function calculateFootprint() {
       var kwh = parseFloat(document.getElementById('kwh').value) || 0;
       var km = parseFloat(document.getElementById('km').value) || 0;
+      var type = document.getElementById('vehicle').value;
+      var v = VEHICLES[type];
 
       var electricityKg = kwh * 0.363;
-      var carKg = km * 0.170;
+      var carKg = (km / 100) * v.consumption * v.factor;
       var totalKg = electricityKg + carKg;
-      var totalTonnes = totalKg / 1000;
 
       document.getElementById('result').innerHTML =
         'Estimated annual footprint: <strong>' + totalKg.toFixed(0) +
-        ' kg CO<sub>2</sub></strong> (' + totalTonnes.toFixed(2) + ' tonnes)<br>' +
-        '<span style="font-size:0.9rem;color:#6b7280;">Electricity: ' +
-        electricityKg.toFixed(0) + ' kg · Car: ' + carKg.toFixed(0) + ' kg</span>';
+        ' kg CO<sub>2</sub></strong> (' + (totalKg / 1000).toFixed(2) + ' tonnes)' +
+        '<br><span style="font-size:0.9rem;color:#6b7280;">Electricity: ' +
+        electricityKg.toFixed(0) + ' kg · ' + v.label + ': ' +
+        carKg.toFixed(0) + ' kg</span>';
     }
   </script>
 
