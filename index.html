@@ -14,29 +14,60 @@
       margin: 0 auto;
       padding: 60px 24px;
     }
-    h1 {
-      font-size: 2.4rem;
-      margin-bottom: 4px;
-      letter-spacing: -0.5px;
-    }
-    .tagline {
-      font-size: 1.15rem;
-      color: #2d6a4f;
-      font-weight: 500;
-      margin-top: 0;
-    }
+    h1 { font-size: 2.4rem; margin-bottom: 4px; letter-spacing: -0.5px; }
+    .tagline { font-size: 1.15rem; color: #2d6a4f; font-weight: 500; margin-top: 0; }
     h2 {
       font-size: 1.2rem;
       margin-top: 48px;
       padding-bottom: 8px;
       border-bottom: 2px solid #d8e2dc;
     }
-    .soon {
-      color: #6b7280;
-      font-style: italic;
+    .soon { color: #6b7280; font-style: italic; }
+    .contact-line { margin: 6px 0; }
+    .calc {
+      background: #f4f7f5;
+      border: 1px solid #d8e2dc;
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 16px;
     }
-    .contact-line {
-      margin: 6px 0;
+    .calc label {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .calc input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #c5d2ca;
+      border-radius: 5px;
+      margin-bottom: 18px;
+      box-sizing: border-box;
+    }
+    .calc button {
+      background: #2d6a4f;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .calc button:hover { background: #245741; }
+    #result {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #1a1a1a;
+      min-height: 1.6em;
+    }
+    .source {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-top: 16px;
+      line-height: 1.5;
     }
     footer {
       margin-top: 64px;
@@ -64,11 +95,32 @@
     Life cycle assessment · Data analytics
   </p>
 
-  <h2>Projects</h2>
-  <p class="soon">
-    Carbon footprint calculator — coming soon. Built on emission factors published by the
-    Umweltbundesamt (German Environment Agency).
+  <h2>Carbon Footprint Calculator</h2>
+  <p>
+    A simple estimate of annual CO<sub>2</sub> emissions from household electricity
+    and car travel, using German emission factors.
   </p>
+
+  <div class="calc">
+    <label for="kwh">Annual electricity use (kWh)</label>
+    <input type="number" id="kwh" placeholder="e.g. 2500" min="0">
+
+    <label for="km">Annual car distance (km)</label>
+    <input type="number" id="km" placeholder="e.g. 12000" min="0">
+
+    <button onclick="calculateFootprint()">Calculate</button>
+
+    <div id="result"></div>
+  </div>
+
+  <p class="source">
+    Emission factors: electricity 363 g CO<sub>2</sub>/kWh (Umweltbundesamt, German
+    electricity mix, 2024); passenger car 170 g CO<sub>2</sub>/km (average petrol vehicle).
+    Scope: direct operational emissions only. Excludes manufacturing, heating, and other
+    consumption. Indicative estimate — not a full life cycle assessment.
+  </p>
+
+  <h2>Projects</h2>
   <p class="soon">
     Comparative carbon analysis of data centres and AI workloads — in development.
   </p>
@@ -90,6 +142,24 @@
   <footer>
     Built and maintained by Asif Alam.
   </footer>
+
+  <script>
+    function calculateFootprint() {
+      var kwh = parseFloat(document.getElementById('kwh').value) || 0;
+      var km = parseFloat(document.getElementById('km').value) || 0;
+
+      var electricityKg = kwh * 0.363;
+      var carKg = km * 0.170;
+      var totalKg = electricityKg + carKg;
+      var totalTonnes = totalKg / 1000;
+
+      document.getElementById('result').innerHTML =
+        'Estimated annual footprint: <strong>' + totalKg.toFixed(0) +
+        ' kg CO<sub>2</sub></strong> (' + totalTonnes.toFixed(2) + ' tonnes)<br>' +
+        '<span style="font-size:0.9rem;color:#6b7280;">Electricity: ' +
+        electricityKg.toFixed(0) + ' kg · Car: ' + carKg.toFixed(0) + ' kg</span>';
+    }
+  </script>
 
 </body>
 </html>
